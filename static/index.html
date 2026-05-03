@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Escrow Mediator</title>
+    <meta name="description" content="Secure escrow mediation service for your transactions">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    
+    <nav class="glass-nav">
+        <div class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            VaultMediator
+        </div>
+        <div class="nav-user" id="nav-user-info" style="display: none;">
+            <span id="user-balance" class="balance-badge">₹0.00</span>
+            <span id="user-name">User</span>
+            <button id="logout-btn" class="btn btn-outline btn-sm">Logout</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Auth Section -->
+        <section id="auth-section" class="glass-card auth-card">
+            <!-- Login Form -->
+            <div id="login-container">
+                <div class="card-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to access your secure vault.</p>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="owner1, customer1, agent1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" value="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Access Vault</button>
+                </form>
+                <div class="mt-3 text-center" style="margin-top: 1rem; text-align: center;">
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Don't have an account? <a href="#" id="show-signup" style="color: #4ade80; text-decoration: none;">Sign up</a></p>
+                </div>
+                <div id="login-error" class="error-text mt-3" style="display: none;"></div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signup-container" style="display: none;">
+                <div class="card-header">
+                    <h2>Create Account</h2>
+                    <p>Join the secure escrow mediator.</p>
+                </div>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-role">Role</label>
+                        <select id="signup-role" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: white; font-family: inherit; margin-top: 0.5rem; outline: none;">
+                            <option value="CUSTOMER" style="color: black;">Customer</option>
+                            <option value="BUSINESS_OWNER" style="color: black;">Business Owner</option>
+                            <option value="DELIVERY_AGENT" style="color: black;">Delivery Agent</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                </form>
+                <div class="mt-3 text-center" style="margin-top: 1rem; text-align: center;">
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Already have an account? <a href="#" id="show-login" style="color: #4ade80; text-decoration: none;">Sign in</a></p>
+                </div>
+                <div id="signup-error" class="error-text mt-3" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard -->
+        <section id="dashboard-section" style="display: none;">
+            <div class="dashboard-header mb-4">
+                <h1 id="dashboard-title">Dashboard</h1>
+                <p id="dashboard-subtitle">Manage your transactions</p>
+            </div>
+
+            <div id="customer-actions" style="display: none; margin-bottom: 2rem;">
+                <button id="open-add-funds-btn" class="btn btn-primary">Add Funds</button>
+            </div>
+
+            <!-- Products Section (for Customers) -->
+            <div id="products-container" class="mb-5" style="display: none;">
+                <h3>Available Products</h3>
+                <div class="product-grid" id="product-list">
+                    <!-- Products injected here -->
+                </div>
+            </div>
+
+            <!-- Transactions Section -->
+            <div class="transactions-wrapper">
+                <h3>Active Transactions</h3>
+                <div class="transaction-list" id="transaction-list">
+                    <!-- Transactions injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Funds Section -->
+        <section id="add-funds-section" class="glass-card auth-card" style="display: none; max-width: 500px; margin: 2rem auto;">
+            <div class="card-header">
+                <h2>Add Funds</h2>
+                <p>Deposit money securely to your vault.</p>
+            </div>
+            <form id="add-funds-form">
+                <div class="form-group">
+                    <label for="fund-amount">Amount (₹)</label>
+                    <input type="number" id="fund-amount" min="1" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                        <label style="cursor: pointer;"><input type="radio" name="payment-method" value="UPI" checked> UPI</label>
+                        <label style="cursor: pointer;"><input type="radio" name="payment-method" value="CARD"> Credit/Debit Card</label>
+                    </div>
+                </div>
+
+                <!-- UPI Details -->
+                <div id="upi-details" style="display: block; margin-bottom: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                    <div class="form-group">
+                        <label for="upi-id">UPI ID</label>
+                        <input type="text" id="upi-id" placeholder="example@upi">
+                    </div>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">Or scan QR code to pay</p>
+                        <img src="/img/dummy_qr.png" alt="Dummy QR Code" style="width: 150px; border-radius: 8px;">
+                    </div>
+                </div>
+
+                <!-- Card Details -->
+                <div id="card-details" style="display: none; margin-bottom: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX">
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="card-expiry">Expiry</label>
+                            <input type="text" id="card-expiry" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="card-cvv">CVV</label>
+                            <input type="password" id="card-cvv" placeholder="123">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="card-name">Name on Card</label>
+                        <input type="text" id="card-name" placeholder="John Doe">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button type="button" id="cancel-add-funds" class="btn btn-outline" style="flex: 1;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Confirm Payment</button>
+                </div>
+            </form>
+            <div id="add-funds-error" class="error-text mt-3" style="display: none;"></div>
+        </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

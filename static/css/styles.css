@@ -1,0 +1,332 @@
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --secondary: #ec4899;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+    
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Blobs for Aesthetic */
+.blob {
+    position: fixed;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.6;
+    border-radius: 50%;
+    animation: float 10s infinite ease-in-out alternate;
+}
+
+.blob-1 {
+    top: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--primary), transparent 70%);
+}
+
+.blob-2 {
+    bottom: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--secondary), transparent 70%);
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* Typography & Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    padding-top: 6rem;
+}
+
+.mt-3 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mb-5 { margin-bottom: 3rem; }
+.w-100 { width: 100%; }
+
+/* Navigation */
+.glass-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 100;
+}
+
+.nav-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-main);
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-brand svg {
+    stroke: url(#gradient); /* This would need inline SVG definition, but using currentColor for now works as fallback if removed gradient */
+    -webkit-text-fill-color: currentColor;
+    color: var(--primary);
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.balance-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Glass Card */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Auth Card */
+.auth-card {
+    max-width: 400px;
+    margin: 4rem auto;
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.card-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-header p {
+    color: var(--text-muted);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    color: var(--text-main);
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.error-text {
+    color: var(--danger);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, var(--primary), var(--primary-hover));
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.45);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--text-muted);
+}
+
+.btn-success { background: var(--success); color: white; }
+.btn-warning { background: var(--warning); color: white; }
+.btn-danger { background: var(--danger); color: white; }
+.btn-info { background: var(--info); color: white; }
+
+.btn-success:hover, .btn-warning:hover, .btn-danger:hover, .btn-info:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* Dashboard Elements */
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 1rem 0;
+}
+
+/* Transaction List */
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transaction-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.transaction-info h4 {
+    margin-bottom: 0.25rem;
+}
+
+.transaction-info p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-PENDING { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); border: 1px solid var(--text-muted); }
+.status-FUNDS_HELD_BY_MEDIATOR { background: rgba(59, 130, 246, 0.1); color: var(--info); border: 1px solid rgba(59, 130, 246, 0.3); }
+.status-IN_TRANSIT { background: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+.status-TRANSACTION_COMPLETE { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+.status-RETURN_IN_PROGRESS { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+.status-REFUNDED { background: rgba(148, 163, 184, 0.1); color: var(--text-main); border: 1px solid var(--text-muted); }
+
+.transaction-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .transaction-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .transaction-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .transaction-actions .btn {
+        flex: 1;
+    }
+}
